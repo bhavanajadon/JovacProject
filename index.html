@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Movie Rating</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1d1f21;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #050505, #232526);
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 0 60px rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .container:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 0 80px rgba(255, 255, 255, 0.15);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: #ff6ec7;
+            background: linear-gradient(90deg, #ff6ec7, #5156ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px #ff6ec7, 0 0 40px #5156ff, 0 0 60px #ff6ec7;
+            }
+            to {
+                text-shadow: 0 0 30px #5156ff, 0 0 50px #ff6ec7, 0 0 70px #5156ff;
+            }
+        }
+
+        form label {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        form input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        form input[type="text"]:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 25px rgba(255, 0, 204, 0.6);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(120deg, #ff0076, #3333ff);
+            color: #fff;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 300%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: skewX(45deg);
+            transition: 0.7s ease;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: linear-gradient(120deg, #ff0099, #6633ff);
+            box-shadow: 0px 25px 50px rgba(255, 0, 150, 0.8);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 30px;
+            color: #ff0099;
+            text-align: center;
+            text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .glow-box {
+            position: absolute;
+            top: -10%;
+            left: 5%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 204, 0.2), transparent);
+            filter: blur(60px);
+            animation: floatGlows 7s infinite ease-in-out alternate;
+        }
+
+        @keyframes floatGlows {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(25px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-box"></div>
+
+    <div class="container">
+        <h1>Movie Rating Predictor</h1>
+        <form method="POST" action="/predict">
+            <label for="feature1">Revenue (Millions):</label>
+            <input type="text" name="feature1" placeholder="Enter movie revenue..." required>
+
+            <label for="feature2">Runtime (Minutes):</label>
+            <input type="text" name="feature2" placeholder="Enter runtime..." required>
+
+            <label for="feature3">Genre:</label>
+            <input type="text" name="feature3" placeholder="Enter genre..." required>
+
+            <label for="feature4">Director:</label>
+            <input type="text" name="feature4" placeholder="Enter director..." required>
+
+            <button type="submit">Predict</button>
+
+            {% if prediction is not none %}
+            <h2>Predicted Rating: {{ prediction }}</h2>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+</html>
